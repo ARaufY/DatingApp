@@ -41,8 +41,8 @@ namespace API.Controllers
 
             return new UserDto
             {
-              UserName = user.UserName,
-              Token = _tokenService.CreateToken(user)
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
             };
         }
 
@@ -61,11 +61,11 @@ namespace API.Controllers
             {
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
             }
-            
+
             return new UserDto
             {
-              UserName = user.UserName,
-              Token = _tokenService.CreateToken(user)
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
             };
         }
 
