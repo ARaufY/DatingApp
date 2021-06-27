@@ -75,7 +75,14 @@ namespace API.Data
 
         public async Task<bool> SaveAllAsync()
         {
-            return await _context.SaveChangesAsync() > 0;
+            try{
+                return await _context.SaveChangesAsync() > 0;
+            } catch(Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+            }
+            return true;
+            
         }
 
         public void Update(AppUser user)
