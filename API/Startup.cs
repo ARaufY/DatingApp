@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using API.Data;
 using API.Extensions;
+using API.Filters;
 using API.Interfaces;
 using API.middleware;
 using API.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,7 +42,12 @@ namespace API
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddApplicationServices(_config);
-      services.AddControllers();
+      services.AddControllers(options =>
+      {
+        options.Filters.Add<RegisterFilter>();
+      });
+       
+      services.AddScoped<RegisterFilter>();
       services.AddCors();
       services.AddIdentityServices(_config);
     }

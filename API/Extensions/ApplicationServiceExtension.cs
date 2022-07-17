@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 
 namespace API.Extensions
 {
@@ -25,7 +27,7 @@ namespace API.Extensions
             {
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
-            
+            services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Startup>());
             return services;
         }
     }
