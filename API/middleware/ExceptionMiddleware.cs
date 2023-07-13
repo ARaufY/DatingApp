@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -35,10 +36,21 @@ namespace API.middleware
                 _logger.LogError(ex, ex.Message);
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                var message = new Message()
+                {
+                    Id = 69,
 
-                var response = _env.IsDevelopment()
-                    ? new ApiExceptions(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
-                    : new ApiExceptions(context.Response.StatusCode, "Internal Server Error");
+                };
+                var error = _env.IsDevelopment() 
+                ? new ApiExceptions(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
+                : new ApiExceptions(context.Response.StatusCode, "Internal Server Error");
+                var errors = new List<ApiExceptions>()
+                {
+                    error
+                };
+                var response =
+                    new ErrorResponse() { Errors = errors };
+                    
 
                 var options = new JsonSerializerOptions{PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
 
@@ -50,5 +62,7 @@ namespace API.middleware
 
             }
         }
+        
+        
 }
 }

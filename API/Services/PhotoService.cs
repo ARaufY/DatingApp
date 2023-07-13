@@ -47,5 +47,12 @@ namespace API.Services
 
             return await _cloudinary.DestroyAsync(deleteParams);
         }
+
+           public async Task<bool> IsDuplicateId(string publicId)
+        {
+            var deleteParams = new DeletionParams(publicId);
+
+            return await _cloudinary.DestroyAsync(deleteParams);
+        }
     }
 }

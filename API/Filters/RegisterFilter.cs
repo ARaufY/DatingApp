@@ -13,6 +13,7 @@ namespace API.Filters
         {
             if (!context.ModelState.IsValid)
             {
+                
                 var errorsInModelState = context.ModelState
                     .Where(x => x.Value.Errors.Count > 0)
                     .ToDictionary(
@@ -20,12 +21,13 @@ namespace API.Filters
                         kvp => kvp.Value.Errors
                             .Select(x => x.ErrorMessage))
                     .ToList();
-                var errorResponse = new ErrorResponse();
+                var errorResponse = new ErrorResp();
                 foreach (var errorModel in from error 
                     in errorsInModelState from subError 
-                    in error.Value select new ApiExceptions(400, subError, subError))
+                    in error.Value select new Message(){Id = 69, Details = subError})
                 {
-                    errorResponse.Errors.Add(errorModel);
+                    
+                    errorResponse.Messages.Add(errorModel);
                 }
 
                 context.Result = new BadRequestObjectResult(errorResponse);

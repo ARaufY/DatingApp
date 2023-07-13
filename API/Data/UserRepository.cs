@@ -89,5 +89,12 @@ namespace API.Data
         {
             _context.Entry(user).State = EntityState.Modified;
         }
+
+          public async Task<bool> IsDuplicateId(Guid id)
+        {
+            var isDuplicateId = await _context.Messages.AsNoTracking().Where(x => x.Id.Equals(id));
+
+            return isDuplicateId;
+        }
     }
 }

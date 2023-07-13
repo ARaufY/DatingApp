@@ -14,7 +14,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ServiceFilter(typeof(RegisterFilter))]
+    //[ServiceFilter(typeof(RegisterFilter))]
+    //[TypeFilter(typeof(RegisterFilter))]
     public class AccountController : BaseApiController
     {
 
@@ -33,6 +34,7 @@ namespace API.Controllers
 
         
         [HttpPost("register")]
+        [TypeFilter(typeof(RegisterFilter))]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
 
