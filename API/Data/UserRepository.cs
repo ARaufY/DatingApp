@@ -92,7 +92,7 @@ namespace API.Data
 
           public async Task<bool> IsDuplicateId(Guid id)
         {
-            var isDuplicateId = await _context.Messages.AsNoTracking().Where(x => x.Id.Equals(id));
+            var isDuplicateId = await _context.Messages.AsNoTracking().AnyAsync(x => x.Id.Equals(id));
 
             return isDuplicateId;
         }
